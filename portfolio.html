@@ -76,7 +76,7 @@
             bottom: 2rem;
             right: 2rem;
             background: linear-gradient(45deg, #00d4ff, #00b3d9);
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             border-radius: 30px;
             box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
             z-index: 1000;
@@ -89,6 +89,9 @@
             text-decoration: none;
             font-weight: 700;
             font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .fixed-contact:hover {
@@ -99,7 +102,7 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0033a0 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -119,7 +122,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(45deg, #00d4ff, #00b3d9, #0033a0);
-            opacity: 0.2;
+            opacity: 0.15;
             animation: gradientShift 25s ease infinite;
             z-index: -1;
         }
@@ -131,7 +134,7 @@
             height: auto;
             object-fit: contain;
             margin: 0;
-            animation: fadeInScale 2s ease-in;
+            animation: zoomIn 2.5s ease-in;
             position: relative;
             z-index: 1;
             filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.6));
@@ -231,7 +234,7 @@
             align-items: center;
             gap: 2rem;
             font-size: 1.2rem;
-            padding: 1rem;
+            padding: 1.2rem;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             transition: all 0.3s ease;
@@ -274,6 +277,16 @@
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
+        .portfolio-intro {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -285,7 +298,7 @@
             border-radius: 25px;
             overflow: hidden;
             transition: all 0.5s ease;
-            animation: fadeIn 1.5s ease-in;
+            animation: slideIn 1.5s ease-in;
             position: relative;
             border: 2px solid rgba(0, 212, 255, 0.2);
         }
@@ -321,6 +334,18 @@
         }
         .portfolio-item:nth-child(3) .video-link {
             background-image: url('https://img.youtube.com/vi/uf9CRGpoUMI/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(4) .video-link {
+            background-image: url('https://img.youtube.com/vi/mrB4JvWaIzw/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(5) .video-link {
+            background-image: url('https://img.youtube.com/vi/BomuqhUuJ9o/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(6) .video-link {
+            background-image: url('https://img.youtube.com/vi/q92mTRvqq0M/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(7) .video-link {
+            background-image: url('https://img.youtube.com/vi/GHBE_Aj9yls/maxresdefault.jpg');
         }
 
         .portfolio-item .video-link:hover {
@@ -376,7 +401,7 @@
             text-align: center;
             opacity: 0;
             transform: translateY(50px);
-            animation: revealSection 1.5s ease forwards 1.5s;
+            animation: revealSection 1.5s ease forwards 2s;
         }
 
         #testimonials h3 {
@@ -431,7 +456,7 @@
             text-align: center;
             opacity: 0;
             transform: translateY(50px);
-            animation: revealSection 1.5s ease forwards 2s;
+            animation: revealSection 1.5s ease forwards 2.5s;
         }
 
         #contact h3 {
@@ -453,7 +478,8 @@
         #contact .contact-links {
             display: flex;
             justify-content: center;
-            gap: 4rem;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
         #contact .contact-links a {
@@ -466,7 +492,9 @@
             font-size: 1.4rem;
             transition: all 0.5s ease;
             box-shadow: 0 10px 30px rgba(0, 212, 255, 0.7);
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         #contact .contact-links a:hover {
@@ -500,8 +528,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
             to { opacity: 1; transform: scale(1); }
         }
 
@@ -512,6 +540,11 @@
         }
 
         @keyframes revealSection {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
@@ -553,6 +586,10 @@
 
             #about img {
                 max-width: 220px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
             }
 
             .portfolio-item .video-link {
@@ -624,20 +661,21 @@
         <div class="about-content">
             <img src="images/logo.png" alt="Imagem Representativa Photoliberato">
             <div class="text">
-                <p>Na Photoliberato, transformamos visões em histórias visuais inesquecíveis. Gilcimar Liberato, mestre em fotografia e vídeo, oferece:</p>
+                <p>Na Photoliberato, cada clique é uma história, cada frame é uma emoção. Gilcimar Liberato, um apaixonado por fotografia e vídeo, cria memórias que transcendem o tempo. Oferecemos:</p>
                 <div class="services-list">
-                    <div><strong>Vídeos Promocionais Irresistíveis:</strong> Eleve sua marca com produções dinâmicas que capturam atenção e geram resultados.</div>
-                    <div><strong>Registros de Eventos Excepcionais:</strong> Casamentos, corporativos ou celebrações – cada momento ganha vida com arte e precisão.</div>
-                    <div><strong>Edições Fotográficas de Alto Impacto:</strong> Converta suas fotos em narrativas visuais que emocionam e inspiram.</div>
+                    <div><strong>Vídeos Promocionais que Cativam:</strong> Transforme sua marca em uma experiência visual inesquecível, conectando-se profundamente com seu público.</div>
+                    <div><strong>Cobertura de Eventos Inesquecíveis:</strong> Seja um casamento, evento corporativo ou celebração especial, capturamos cada detalhe com sensibilidade e precisão.</div>
+                    <div><strong>Fotografia e Edição que Inspiram:</strong> Suas fotos ganham vida com edições que evocam sentimentos e contam sua história de forma única.</div>
                 </div>
-                <p>Com entregas em até 24 horas e um toque pessoal, somos a solução premium para eternizar seu legado. Reserve agora – vagas são exclusivas!</p>
+                <p>Com mais de 10 anos de experiência, entregas em até 24 horas e um atendimento personalizado, a Photoliberato é a escolha certa para quem busca eternizar momentos com arte. Reserve agora – nossas vagas são limitadas e exclusivas!</p>
             </div>
         </div>
     </section>
 
     <!-- Seção de Portfólio -->
     <section id="portfolio">
-        <h3>Portfólio Photoliberato</h3>
+        <h3 style="color: #00d4ff; text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">Portfólio Photoliberato</h3>
+        <p class="portfolio-intro">Explore uma seleção exclusiva de trabalhos que capturam a essência de cada momento com arte e emoção.</p>
         <div class="portfolio-grid">
             <div class="portfolio-item">
                 <a href="https://youtu.be/5qBRqjoncr0" target="_blank" class="video-link">
@@ -645,7 +683,7 @@
                 </a>
                 <div class="content">
                     <h4>Vídeo Promocional - Restaurante Sabor de Ervália</h4>
-                    <p>Um vídeo vibrante que destaca o ambiente acolhedor e o cardápio único, projetado para atrair novos clientes.</p>
+                    <p>Uma produção vibrante que exalta o ambiente acolhedor e o cardápio único, ideal para atrair clientes.</p>
                 </div>
             </div>
             <div class="portfolio-item">
@@ -654,7 +692,7 @@
                 </a>
                 <div class="content">
                     <h4>Cobertura - Feira de Negócios 2024</h4>
-                    <p>Registro dinâmico da Feira de Negócios, capturando palestras e interações com uma edição energética.</p>
+                    <p>Registro dinâmico capturando palestras e interações com uma edição energética e moderna.</p>
                 </div>
             </div>
             <div class="portfolio-item">
@@ -663,7 +701,43 @@
                 </a>
                 <div class="content">
                     <h4>Vídeo Promocional - Produto Artesanal</h4>
-                    <p>Promoção de um produto local com storytelling envolvente e detalhes visuais que conectam emocionalmente.</p>
+                    <p>Promoção envolvente de um produto local, com storytelling que conecta emocionalmente.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/mrB4JvWaIzw" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Evento Corporativo - Lançamento de Produto</h4>
+                    <p>Uma cobertura impecável que destaca a inovação e o impacto do lançamento, conectando marcas e público.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/BomuqhUuJ9o" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Casamento - Luiza & Rafael</h4>
+                    <p>Um registro emocionante que captura a essência do amor, com cada detalhe eternizado em vídeo.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/q92mTRvqq0M" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Moda Local</h4>
+                    <p>Produção estilizada que realça a beleza e a autenticidade de uma marca de moda, atraindo olhares.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/GHBE_Aj9yls" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Documentário - Tradições de Ervália</h4>
+                    <p>Um mergulho visual na cultura local, com imagens que contam histórias e preservam memórias.</p>
                 </div>
             </div>
         </div>
@@ -703,7 +777,7 @@
         <p>© 2025 Photoliberato | Criado por Gilcimar Liberato | Ervália, MG</p>
     </footer>
 
-    <!-- Script para animações e efeitos */
+    <!-- Script para animações e efeitos -->
     <script>
         // Efeito de scroll na navegação
         window.addEventListener('scroll', () => {
@@ -719,7 +793,7 @@
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             const scrollPosition = window.pageYOffset;
-            hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+            hero.style.backgroundPositionY = `${scrollPosition * 0.7}px`;
         });
 
         // Animação de seções ao rolar
@@ -728,7 +802,7 @@
             sections.forEach(section => {
                 const sectionTop = section.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
-                if (sectionTop < windowHeight - 100) {
+                if (sectionTop < windowHeight - 150) {
                     section.style.opacity = '1';
                     section.style.transform = 'translateY(0)';
                 }
