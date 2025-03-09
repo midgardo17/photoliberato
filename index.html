@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoliberato - Fotografia & Vídeo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navegação */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
+
+        .nav.scrolled {
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 1);
+        }
+
+        .nav img.logo {
+            max-height: 45px;
+            width: auto;
+            transition: max-height 0.4s ease;
+        }
+
+        .nav.scrolled img.logo {
+            max-height: 40px;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 400;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        .nav ul li a:hover {
+            color: #00d4ff;
+        }
+
+        /* Botão Fixo de Contato */
+        .fixed-contact {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(45deg, #00d4ff, #00b3d9);
+            padding: 1.2rem 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.5);
+            z-index: 1000;
+            transition: all 0.4s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .fixed-contact a {
+            color: #121212;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .fixed-contact:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0033a0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00d4ff, #00b3d9, #0033a0);
+            opacity: 0.15;
+            animation: gradientShift 25s ease infinite;
+            z-index: -1;
+        }
+
+        .hero img.logo {
+            max-width: 85%;
+            max-height: 85%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin: 0;
+            animation: zoomIn 2.5s ease-in;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.6));
+        }
+
+        .hero .contact-overlay {
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 1.2rem 1.8rem;
+            border-radius: 25px;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            font-size: 1rem;
+            opacity: 0;
+            animation: fadeIn 2s ease-in 1s forwards;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero .contact-overlay a {
+            color: #00d4ff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero .contact-overlay a:hover {
+            color: #00b3d9;
+        }
+
+        /* Seção Sobre */
+        #about {
+            padding: 8rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a1a, #222222);
+            border-radius: 35px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: revealSection 1.5s ease forwards 0.5s;
+        }
+
+        #about h3 {
+            font-size: 3.2rem;
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 3rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        #about .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 3.5rem;
+        }
+
+        #about img {
+            max-width: 320px;
+            border-radius: 25px;
+            box-shadow: 0 10px 35px rgba(0, 212, 255, 0.6);
+            animation: fadeIn 2s ease-in;
+        }
+
+        #about .text {
+            max-width: 750px;
+            text-align: justify;
+        }
+
+        #about p {
+            font-size: 1.25rem;
+            color: #ccc;
+            margin-bottom: 1.8rem;
+            line-height: 2;
+        }
+
+        #about .highlight {
+            color: #00d4ff;
+            font-weight: 700;
+        }
+
+        #about .services-list {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        #about .services-list div {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 1.2rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        #about .services-list div:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        #about .services-list div::before {
+            content: '📸';
+            font-size: 1.8rem;
+        }
+
+        #about .services-list div:nth-child(2)::before {
+            content: '🎥';
+        }
+
+        #about .services-list div:nth-child(3)::before {
+            content: '✂️';
+        }
+
+        /* Seção de Portfólio */
+        #portfolio {
+            padding: 8rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: revealSection 1.5s ease forwards 1s;
+        }
+
+        #portfolio h3 {
+            font-size: 3.2rem;
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 4.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-intro {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 3.5rem;
+        }
+
+        .portfolio-item {
+            background: #1a1a1a;
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            animation: slideIn 1.5s ease-in;
+            position: relative;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-15px) scale(1.04);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.7);
+            border: 2px solid rgba(0, 212, 255, 0.5);
+        }
+
+        .portfolio-item .video-link {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 260px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 25px 25px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* Thumbnails dos vídeos do YouTube */
+        .portfolio-item:nth-child(1) .video-link {
+            background-image: url('https://img.youtube.com/vi/5qBRqjoncr0/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(2) .video-link {
+            background-image: url('https://img.youtube.com/vi/ncZuAkDoORA/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(3) .video-link {
+            background-image: url('https://img.youtube.com/vi/uf9CRGpoUMI/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(4) .video-link {
+            background-image: url('https://img.youtube.com/vi/mrB4JvWaIzw/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(5) .video-link {
+            background-image: url('https://img.youtube.com/vi/BomuqhUuJ9o/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(6) .video-link {
+            background-image: url('https://img.youtube.com/vi/q92mTRvqq0M/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(7) .video-link {
+            background-image: url('https://img.youtube.com/vi/GHBE_Aj9yls/maxresdefault.jpg');
+        }
+
+        .portfolio-item .video-link:hover {
+            filter: brightness(1.3);
+        }
+
+        .portfolio-item .video-link .play-button {
+            background: linear-gradient(45deg, rgba(255, 0, 0, 0.9), rgba(255, 50, 50, 0.9));
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .portfolio-item .video-link .play-button::before {
+            content: '▶';
+            color: #ffffff;
+            font-size: 36px;
+        }
+
+        .portfolio-item .video-link:hover .play-button {
+            background: linear-gradient(45deg, rgba(255, 0, 0, 1), rgba(255, 50, 50, 1));
+            transform: scale(1.2);
+        }
+
+        .portfolio-item .content {
+            padding: 2.2rem;
+        }
+
+        .portfolio-item h4 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item p {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.9;
+        }
+
+        /* Seção de Depoimentos */
+        #testimonials {
+            padding: 8rem 4rem;
+            background: linear-gradient(135deg, #1a1a1a, #222222);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: revealSection 1.5s ease forwards 2s;
+        }
+
+        #testimonials h3 {
+            font-size: 3.2rem;
+            color: #00d4ff;
+            margin-bottom: 4.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 3.5rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background: #222;
+            padding: 2.5rem;
+            border-radius: 25px;
+            transition: all 0.5s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .testimonial-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.6);
+            border: 2px solid rgba(0, 212, 255, 0.5);
+        }
+
+        .testimonial-item p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 2;
+        }
+
+        .testimonial-item .author {
+            font-size: 1.05rem;
+            color: #00d4ff;
+            font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Seção de Contato */
+        #contact {
+            padding: 8rem 4rem;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: revealSection 1.5s ease forwards 2.5s;
+        }
+
+        #contact h3 {
+            font-size: 3.2rem;
+            color: #00d4ff;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        #contact p {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 3.5rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #contact .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        #contact .contact-links a {
+            background: linear-gradient(45deg, #00d4ff, #00b3d9);
+            color: #121212;
+            padding: 1.5rem 3.5rem;
+            border-radius: 45px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.7);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #contact .contact-links a:hover {
+            background: linear-gradient(45deg, #00b3d9, #0033a0);
+            transform: scale(1.12);
+            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.9);
+        }
+
+        /* Rodapé */
+        footer {
+            padding: 3.5rem;
+            background: #0f0f0f;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes revealSection {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav.scrolled {
+                padding: 0.8rem 1.2rem;
+            }
+
+            .hero img.logo {
+                max-width: 90%;
+                max-height: 75%;
+            }
+
+            .hero .contact-overlay {
+                top: 1.5rem;
+                right: 1.5rem;
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            #about, #portfolio, #testimonials, #contact {
+                padding: 5rem 1.5rem;
+            }
+
+            #about h3, #portfolio h3, #testimonials h3, #contact h3 {
+                font-size: 2.5rem;
+            }
+
+            #about img {
+                max-width: 220px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-item .video-link {
+                height: 200px;
+            }
+
+            .portfolio-item .video-link .play-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .portfolio-item .video-link .play-button::before {
+                font-size: 24px;
+            }
+
+            #contact .contact-links {
+                flex-direction: column;
+                gap: 2.5rem;
+            }
+
+            #contact .contact-links a {
+                padding: 1.2rem 2.5rem;
+                font-size: 1.2rem;
+            }
+
+            .fixed-contact {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        /* Efeito de scroll na navegação */
+        @media (min-width: 769px) {
+            body {
+                scroll-behavior: smooth;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="nav">
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
+        <ul>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#contact">Contato</a></li>
+        </ul>
+    </nav>
+
+    <!-- Botão Fixo de Contato -->
+    <div class="fixed-contact">
+        <a href="https://wa.me/553298137981?text=Olá,%20Photoliberato!%20Tenho%20interesse%20nos%20seus%20serviços%20de%20fotografia%20e%20vídeo.%20Gostaria%20de%20um%20orçamento%20urgente%20para%20[inserir%20detalhe,%20ex.:%20casamento/evento%20promocional].%20Tenho%20pressa,%20pois%20as%20vagas%20são%20limitadas!%20Por%20favor,%20me%20ajude%20a%20eternizar%20meus%20momentos%20especiais." target="_blank">Fale Agora</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
+        <div class="contact-overlay">
+            <span>📞 (32) 9813-7981</span>
+            <a href="https://youtube.com/@gilmarliberato?si=Qp8s0qbh7XrZ53A" target="_blank">YouTube</a>
+        </div>
+    </section>
+
+    <!-- Seção Sobre -->
+    <section id="about">
+        <h3>Serviços Photoliberato</h3>
+        <div class="about-content">
+            <img src="images/logo.png" alt="Imagem Representativa Photoliberato">
+            <div class="text">
+                <p>Na Photoliberato, cada clique é uma história, cada frame é uma emoção. Gilcimar Liberato, um apaixonado por fotografia e vídeo, cria memórias que transcendem o tempo. Oferecemos:</p>
+                <div class="services-list">
+                    <div><strong>Vídeos Promocionais que Cativam:</strong> Transforme sua marca em uma experiência visual inesquecível, conectando-se profundamente com seu público.</div>
+                    <div><strong>Cobertura de Eventos Inesquecíveis:</strong> Seja um casamento, evento corporativo ou celebração especial, capturamos cada detalhe com sensibilidade e precisão.</div>
+                    <div><strong>Fotografia e Edição que Inspiram:</strong> Suas fotos ganham vida com edições que evocam sentimentos e contam sua história de forma única.</div>
+                </div>
+                <p>Com mais de 10 anos de experiência, entregas em até 24 horas e um atendimento personalizado, a Photoliberato é a escolha certa para quem busca eternizar momentos com arte. Reserve agora – nossas vagas são limitadas e exclusivas!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Portfólio -->
+    <section id="portfolio">
+        <h3 style="color: #00d4ff; text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">Portfólio Photoliberato</h3>
+        <p class="portfolio-intro">Explore uma seleção exclusiva de trabalhos que capturam a essência de cada momento com arte e emoção.</p>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <a href="https://youtu.be/5qBRqjoncr0" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Restaurante Sabor de Ervália</h4>
+                    <p>Uma produção vibrante que exalta o ambiente acolhedor e o cardápio único, ideal para atrair clientes.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/ncZuAkDoORA" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Cobertura - Feira de Negócios 2024</h4>
+                    <p>Registro dinâmico capturando palestras e interações com uma edição energética e moderna.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/uf9CRGpoUMI" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Produto Artesanal</h4>
+                    <p>Promoção envolvente de um produto local, com storytelling que conecta emocionalmente.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/mrB4JvWaIzw" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Evento Corporativo - Lançamento de Produto</h4>
+                    <p>Uma cobertura impecável que destaca a inovação e o impacto do lançamento, conectando marcas e público.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/BomuqhUuJ9o" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Casamento - Luiza & Rafael</h4>
+                    <p>Um registro emocionante que captura a essência do amor, com cada detalhe eternizado em vídeo.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/q92mTRvqq0M" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Moda Local</h4>
+                    <p>Produção estilizada que realça a beleza e a autenticidade de uma marca de moda, atraindo olhares.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/GHBE_Aj9yls" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Documentário - Tradições de Ervália</h4>
+                    <p>Um mergulho visual na cultura local, com imagens que contam histórias e preservam memórias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Depoimentos -->
+    <section id="testimonials">
+        <h3>O Que Nossos Clientes Dizem</h3>
+        <div class="testimonial-grid">
+            <div class="testimonial-item">
+                <p>"O vídeo promocional da Photoliberato aumentou nossas vendas em 30%! A qualidade e a entrega rápida foram incríveis."</p>
+                <p class="author">— Mariana S., Proprietária de Restaurante</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"O registro do meu casamento ficou perfeito. A Photoliberato capturou cada emoção de forma única!"</p>
+                <p class="author">— João e Ana, Noivos</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"Profissionalismo e criatividade definem o trabalho da Photoliberato. Recomendo para qualquer evento!"</p>
+                <p class="author">— Laura M., Organizadora de Eventos</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section id="contact">
+        <h3>Contato Photoliberato</h3>
+        <p>Não perca mais tempo! Entre em contato agora e garanta sua sessão – <span class="highlight">vagas são exclusivas!</span></p>
+        <div class="contact-links">
+            <a href="https://wa.me/553298137981?text=Olá,%20Photoliberato!%20Tenho%20interesse%20nos%20seus%20serviços%20de%20fotografia%20e%20vídeo.%20Gostaria%20de%20um%20orçamento%20urgente%20para%20[inserir%20detalhe,%20ex.:%20casamento/evento%20promocional].%20Tenho%20pressa,%20pois%20as%20vagas%20são%20limitadas!%20Por%20favor,%20me%20ajude%20a%20eternizar%20meus%20momentos%20especiais." target="_blank">WhatsApp</a>
+            <a href="https://youtube.com/@gilmarliberato?si=Qp8s0qbh7XrZ53A" target="_blank">YouTube</a>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>© 2025 Photoliberato | Criado por Gilcimar Liberato | Ervália, MG</p>
+    </footer>
+
+    <!-- Script para animações e efeitos -->
+    <script>
+        // Efeito de scroll na navegação
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Animação de parallax no hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrollPosition = window.pageYOffset;
+            hero.style.backgroundPositionY = `${scrollPosition * 0.7}px`;
+        });
+
+        // Animação de seções ao rolar
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (sectionTop < windowHeight - 150) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
