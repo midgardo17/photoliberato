@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photoliberato - Fotografia & Vídeo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
+            background-color: #0d0d0d;
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
@@ -25,18 +25,19 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(12px);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .nav img.logo {
-            max-height: 40px;
+            max-height: 40px; /* Ajustado para tamanho consistente na navegação */
+            width: auto;
         }
 
         .nav ul {
@@ -60,30 +61,42 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/images/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 0 2rem;
-            animation: fadeIn 1.5s ease-in;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 600;
-            color: #00d4ff;
-            margin-bottom: 0.5rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00d4ff, #00b3d9);
+            opacity: 0.1;
+            animation: gradientShift 15s ease infinite;
         }
 
-        .hero h2 {
-            font-size: 1.8rem;
+        .hero img.logo {
+            max-width: 200px; /* Reduzido para evitar "super size" */
+            max-height: 200px;
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
             font-weight: 300;
-            color: #ffffff;
+            color: #ccc;
             margin-bottom: 1.5rem;
+            max-width: 600px;
         }
 
         .hero .cta-button {
@@ -92,14 +105,16 @@
             padding: 1rem 2rem;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: background 0.3s ease, transform 0.3s ease;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
         }
 
         .hero .cta-button:hover {
             background: #00b3d9;
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
         }
 
         /* Seção Sobre */
@@ -107,14 +122,8 @@
             padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3rem;
-            align-items: center;
-            justify-content: center;
             background: #1a1a1a;
             border-radius: 20px;
-            margin-top: -3rem;
             position: relative;
             z-index: 1;
         }
@@ -122,9 +131,17 @@
         #about h3 {
             font-size: 2.5rem;
             text-align: center;
-            width: 100%;
             color: #00d4ff;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #about .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
         }
 
         #about img {
@@ -134,11 +151,20 @@
             animation: fadeIn 2s ease-in;
         }
 
-        #about p {
+        #about .text {
             max-width: 600px;
+            text-align: justify;
+        }
+
+        #about p {
             font-size: 1.1rem;
             color: #ccc;
-            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        #about .highlight {
+            color: #00d4ff;
+            font-weight: 600;
         }
 
         /* Seção de Portfólio */
@@ -146,7 +172,7 @@
             padding: 6rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
-            background: #121212;
+            background: #0d0d0d;
         }
 
         #portfolio h3 {
@@ -181,12 +207,24 @@
             display: block;
             width: 100%;
             height: 200px;
-            background: #333;
+            background-size: cover;
+            background-position: center;
             border-radius: 15px 15px 0 0;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
+        }
+
+        /* Thumbnails dos vídeos do YouTube */
+        .portfolio-item:nth-child(1) .video-link {
+            background-image: url('https://img.youtube.com/vi/5qBRqjoncr0/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(2) .video-link {
+            background-image: url('https://img.youtube.com/vi/ncZuAkDoORA/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(3) .video-link {
+            background-image: url('https://img.youtube.com/vi/uf9CRGpoUMI/maxresdefault.jpg');
         }
 
         .portfolio-item .video-link .play-button {
@@ -198,6 +236,8 @@
             align-items: center;
             justify-content: center;
             transition: background 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .portfolio-item .video-link .play-button::before {
@@ -225,23 +265,69 @@
             color: #ccc;
         }
 
+        /* Seção de Depoimentos */
+        #testimonials {
+            padding: 6rem 2rem;
+            background: #1a1a1a;
+            text-align: center;
+        }
+
+        #testimonials h3 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background: #222;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .testimonial-item p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-item .author {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
         /* Seção de Contato */
         #contact {
             padding: 6rem 2rem;
-            background: #1a1a1a;
+            background: #0d0d0d;
             text-align: center;
         }
 
         #contact h3 {
             font-size: 2.5rem;
             color: #00d4ff;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         #contact p {
             font-size: 1.2rem;
             color: #ccc;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         #contact .contact-links {
@@ -256,14 +342,16 @@
             padding: 1rem 2rem;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.1rem;
-            transition: background 0.3s ease, transform 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
         }
 
         #contact .contact-links a:hover {
             background: #00b3d9;
             transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
         }
 
         /* Rodapé */
@@ -290,18 +378,25 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .nav ul {
                 display: none; /* Menu escondido em telas pequenas */
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero img.logo {
+                max-width: 150px;
+                max-height: 150px;
             }
 
-            .hero h2 {
-                font-size: 1.5rem;
+            .hero p {
+                font-size: 1.1rem;
             }
 
             .hero .cta-button {
@@ -309,7 +404,7 @@
                 font-size: 1rem;
             }
 
-            #about h3, #portfolio h3, #contact h3 {
+            #about h3, #portfolio h3, #testimonials h3, #contact h3 {
                 font-size: 2rem;
             }
 
@@ -340,7 +435,7 @@
 <body>
     <!-- Navegação -->
     <nav class="nav">
-        <img src="assets/images/logo.png" alt="Logotipo Photoliberato" class="logo">
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
         <ul>
             <li><a href="#about">Sobre</a></li>
             <li><a href="#portfolio">Portfólio</a></li>
@@ -350,16 +445,21 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Photoliberato</h1>
-        <h2>Fotografia & Vídeo em Ervália</h2>
-        <a href="#portfolio" class="cta-button">Explore Meu Trabalho</a>
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
+        <p>Transforme seus momentos em memórias inesquecíveis com a Photoliberato.</p>
+        <a href="#contact" class="cta-button">Entre em Contato Agora – Vagas Limitadas!</a>
     </section>
 
     <!-- Seção Sobre -->
     <section id="about">
         <h3>Sobre a Photoliberato</h3>
-        <img src="assets/images/gilmar.jpg" alt="Foto de Gilmar Liberato">
-        <p>A Photoliberato é o estúdio de fotografia e vídeo criado por Gilmar Liberato, baseado em Ervália, MG. Com um compromisso de entregar projetos de alta qualidade em até 24 horas, nossa missão é capturar a essência de cada momento e transformar ideias em visuais impactantes. Especializados em vídeos promocionais, edições fotográficas e coberturas de eventos, ajudamos empresas a crescer e eternizamos memórias pessoais.</p>
+        <div class="about-content">
+            <img src="assets/images/gilmar.jpg" alt="Foto de Gilmar Liberato">
+            <div class="text">
+                <p>Criado por <span class="highlight">Gilmar Liberato</span>, especialista em fotografia e vídeo em Ervália, MG, o estúdio Photoliberato é referência em transformar ideias em visuais impactantes.</p>
+                <p>Com <span class="highlight">mais de 100 empresas e famílias atendidas</span>, oferecemos serviços de alta qualidade com entrega em até 24 horas. Seja para vídeos promocionais, edições fotográficas ou coberturas de eventos, estamos aqui para eternizar seus momentos mais importantes.</p>
+            </div>
+        </div>
     </section>
 
     <!-- Seção de Portfólio -->
@@ -396,10 +496,527 @@
         </div>
     </section>
 
+    <!-- Seção de Depoimentos -->
+    <section id="testimonials">
+        <h3>O Que Nossos Clientes Dizem</h3>
+        <div class="testimonial-grid">
+            <div class="testimonial-item">
+                <p>"O vídeo promocional da Photoliberato aumentou nossas vendas em 30%! A qualidade e a entrega rápida foram incríveis."</p>
+                <p class="author">— Mariana S., Proprietária de Restaurante</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"O registro do meu casamento ficou perfeito. A Photoliberato capturou cada emoção de forma única!"</p>
+                <p class="author">— João e Ana, Noivos</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"Profissionalismo e criatividade definem o trabalho da Photoliberato. Recomendo para qualquer evento!"</p>
+                <p class="author">— Laura M., Organizadora de Eventos</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Seção de Contato -->
     <section id="contact">
         <h3>Contato Photoliberato</h3>
-        <p>Transforme sua visão em realidade com a Photoliberato! Entre em contato para projetos personalizados.</p>
+        <p>Não perca mais tempo! Entre em contato agora e garanta sua sessão – <span class="highlight">vagas limitadas!</span></p>
+        <div class="contact-links">
+            <a href="https://wa.me/553298137981" target="_blank">WhatsApp: (32) 9813-7981</a>
+            <a href="https://youtube.com/@gilmarliberato?si=Qp8s0qbh7XrZ53A" target="_blank">YouTube</a>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>© 2025 Photoliberato | Criado por Gilmar Liberato | Ervália, MG</p>
+    </footer>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoliberato - Fotografia & Vídeo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navegação */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav img.logo {
+            max-height: 40px; /* Tamanho na navegação permanece pequeno */
+            width: auto;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 400;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav ul li a:hover {
+            color: #00d4ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00d4ff, #00b3d9);
+            opacity: 0.1;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .hero img.logo {
+            max-width: 80%; /* Ocupa 80% da largura da hero */
+            max-height: 80%; /* Ocupa 80% da altura da hero */
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Mantém a proporção sem distorção */
+            margin: 0; /* Remove margens para ocupar o espaço */
+            animation: fadeIn 2s ease-in;
+        }
+
+        /* Seção Sobre */
+        #about {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #about h3 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        #about .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        #about img {
+            max-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            animation: fadeIn 2s ease-in;
+        }
+
+        #about .text {
+            max-width: 600px;
+            text-align: justify;
+        }
+
+        #about p {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        #about .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Seção de Portfólio */
+        #portfolio {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0d0d0d;
+        }
+
+        #portfolio h3 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 3rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 1.5s ease-in;
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .portfolio-item .video-link {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        /* Thumbnails dos vídeos do YouTube */
+        .portfolio-item:nth-child(1) .video-link {
+            background-image: url('https://img.youtube.com/vi/5qBRqjoncr0/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(2) .video-link {
+            background-image: url('https://img.youtube.com/vi/ncZuAkDoORA/maxresdefault.jpg');
+        }
+        .portfolio-item:nth-child(3) .video-link {
+            background-image: url('https://img.youtube.com/vi/uf9CRGpoUMI/maxresdefault.jpg');
+        }
+
+        .portfolio-item .video-link .play-button {
+            background: rgba(255, 0, 0, 0.8);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-item .video-link .play-button::before {
+            content: '▶';
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .portfolio-item .video-link:hover .play-button {
+            background: rgba(255, 0, 0, 1);
+        }
+
+        .portfolio-item .content {
+            padding: 1.5rem;
+        }
+
+        .portfolio-item h4 {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-item p {
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        /* Seção de Depoimentos */
+        #testimonials {
+            padding: 6rem 2rem;
+            background: #1a1a1a;
+            text-align: center;
+        }
+
+        #testimonials h3 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background: #222;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .testimonial-item p {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-item .author {
+            font-size: 0.9rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        /* Seção de Contato */
+        #contact {
+            padding: 6rem 2rem;
+            background: #0d0d0d;
+            text-align: center;
+        }
+
+        #contact h3 {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+        }
+
+        #contact p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        #contact .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        #contact .contact-links a {
+            background: #00d4ff;
+            color: #121212;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        #contact .contact-links a:hover {
+            background: #00b3d9;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
+        }
+
+        /* Rodapé */
+        footer {
+            padding: 2rem;
+            background: #0f0f0f;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .nav ul {
+                display: none; /* Menu escondido em telas pequenas */
+            }
+
+            .hero img.logo {
+                max-width: 80%;
+                max-height: 70%; /* Ajuste proporcional para telas menores */
+            }
+
+            #about h3, #portfolio h3, #testimonials h3, #contact h3 {
+                font-size: 2rem;
+            }
+
+            #about img {
+                max-width: 200px;
+            }
+
+            .portfolio-item .video-link {
+                height: 180px;
+            }
+
+            .portfolio-item .video-link .play-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .portfolio-item .video-link .play-button::before {
+                font-size: 20px;
+            }
+
+            #contact .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav class="nav">
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
+        <ul>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#contact">Contato</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="images/logo.png" alt="Logotipo Photoliberato" class="logo">
+    </section>
+
+    <!-- Seção Sobre -->
+    <section id="about">
+        <h3>Sobre a Photoliberato</h3>
+        <div class="about-content">
+            <img src="assets/images/gilmar.jpg" alt="Foto de Gilmar Liberato">
+            <div class="text">
+                <p>Criado por <span class="highlight">Gilmar Liberato</span>, especialista em fotografia e vídeo em Ervália, MG, o estúdio Photoliberato é referência em transformar ideias em visuais impactantes.</p>
+                <p>Com <span class="highlight">mais de 100 empresas e famílias atendidas</span>, oferecemos serviços de alta qualidade com entrega em até 24 horas. Seja para vídeos promocionais, edições fotográficas ou coberturas de eventos, estamos aqui para eternizar seus momentos mais importantes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Portfólio -->
+    <section id="portfolio">
+        <h3>Portfólio Photoliberato</h3>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <a href="https://youtu.be/5qBRqjoncr0" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Restaurante Sabor de Ervália</h4>
+                    <p>Um vídeo vibrante que destaca o ambiente acolhedor e o cardápio único, projetado para atrair novos clientes.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/ncZuAkDoORA" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Cobertura - Feira de Negócios 2024</h4>
+                    <p>Registro dinâmico da Feira de Negócios, capturando palestras e interações com uma edição energética.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <a href="https://youtu.be/uf9CRGpoUMI" target="_blank" class="video-link">
+                    <div class="play-button"></div>
+                </a>
+                <div class="content">
+                    <h4>Vídeo Promocional - Produto Artesanal</h4>
+                    <p>Promoção de um produto local com storytelling envolvente e detalhes visuais que conectam emocionalmente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Depoimentos -->
+    <section id="testimonials">
+        <h3>O Que Nossos Clientes Dizem</h3>
+        <div class="testimonial-grid">
+            <div class="testimonial-item">
+                <p>"O vídeo promocional da Photoliberato aumentou nossas vendas em 30%! A qualidade e a entrega rápida foram incríveis."</p>
+                <p class="author">— Mariana S., Proprietária de Restaurante</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"O registro do meu casamento ficou perfeito. A Photoliberato capturou cada emoção de forma única!"</p>
+                <p class="author">— João e Ana, Noivos</p>
+            </div>
+            <div class="testimonial-item">
+                <p>"Profissionalismo e criatividade definem o trabalho da Photoliberato. Recomendo para qualquer evento!"</p>
+                <p class="author">— Laura M., Organizadora de Eventos</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section id="contact">
+        <h3>Contato Photoliberato</h3>
+        <p>Não perca mais tempo! Entre em contato agora e garanta sua sessão – <span class="highlight">vagas limitadas!</span></p>
         <div class="contact-links">
             <a href="https://wa.me/553298137981" target="_blank">WhatsApp: (32) 9813-7981</a>
             <a href="https://youtube.com/@gilmarliberato?si=Qp8s0qbh7XrZ53A" target="_blank">YouTube</a>
